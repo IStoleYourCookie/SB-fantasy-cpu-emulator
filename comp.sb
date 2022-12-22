@@ -1,0 +1,269 @@
+open:
+i = 1
+name = TextWindow.Read()
+romfile = "C:\TEST\" + name
+name = TextWindow.Read()
+ramfile = "C:\TEST\" + name
+name = TextWindow.Read()
+stackfile = "C:\TEST\" + name
+
+While File.ReadLine(romfile, i) <> "^Z"
+  prg[i] = File.ReadLine(romfile, i)
+  i = i + 1
+EndWhile
+
+halt = 0
+instpointer = 1
+stckpointer = 1
+
+While halt = 0
+  
+  oper = prg[instpointer]
+  
+  If oper = "NOP" Then
+    instpointer = instpointer + 1
+    
+  ElseIf oper = "ITM" Then
+    value = prg[instpointer + 1]
+    address = prg[instpointer + 2]
+    File.WriteLine(ramfile, address, value)
+    instpointer = instpointer + 3
+    
+  ElseIf oper = "PUSH M" Then
+    address = prg[instpointer + 1]
+    value = File.ReadLine(ramfile, address)
+    File.WriteLine(stackfile, stckpointer, value)
+    stckpointer = stckpointer + 1
+    instpointer = instpointer + 2
+    
+  ElseIf oper = "PUSH I" Then
+    value = prg[instpointer + 1]
+    File.WriteLine(stackfile, stckpointer, value)
+    stckpointer = stckpointer + 1
+    instpointer = instpointer + 2
+    
+  ElseIf oper = "POP" Then
+    address = prg[instpointer + 1]
+    value = File.ReadLine(stackfile, stckpointer - 1)
+    File.WriteLine(ramfile, address, value)
+    File.WriteLine(stackfile, stckpointer, "")
+    stckpointer = stckpointer - 1
+    instpointer = instpointer + 2
+    
+  ElseIf oper = "DLY I" Then
+    value = prg[instpointer + 1]
+    Program.Delay(value)
+    instpointer = instpointer + 2
+    
+  ElseIf oper = "DLY M" Then
+    address = prg[instpointer + 1]
+    value = File.ReadLine(ramfile, address)
+    Program.Delay(value)
+    instpointer = instpointer + 2
+    
+  ElseIf oper = "DLY S" Then
+    value = File.ReadLine(stackfile, stckpointer)
+    Program.Delay(value)
+    instpointer = instpointer + 1
+    
+  ElseIf oper = "JMP I" Then
+    address = prg[instpointer + 1]
+    instpointer = address
+    
+  ElseIf oper = "JMP M" Then
+    address = prg[instpointer + 1]
+    instpointer = File.ReadLine(ramfile, address)
+    
+  ElseIf oper = "JMP S" Then
+    address = File.ReadLine(stackfile, stckpointer)
+    instpointer = address
+    
+  ElseIf oper = "COMP M M" Then
+    a1 = prg[instpointer + 1]
+    a2 = prg[instpointer + 2]
+    a3 = prg[instpointer + 3]
+    num1 = File.ReadLine(ramfile, a1)
+    num2 = File.ReadLine(ramfile, a2)
+    If num1 < num2 Then
+      File.WriteLine(ramfile, a3, 0)
+    ElseIf num1 = num2 Then
+      File.WriteLine(ramfile, a3, 1)
+    Else
+      File.WriteLine(ramfile, a3, 2)
+    EndIf
+    instpointer = instpointer + 4
+    
+  ElseIf oper = "COMP I I" Then
+    num1 = prg[instpointer + 1]
+    num2 = prg[instpointer + 2]
+    address = prg[instpointer + 3]
+    If num1 < num2 Then
+      File.WriteLine(ramfile, address, 0)
+    ElseIf num1 = num2 Then
+      File.WriteLine(ramfile, address, 1)
+    Else
+      File.WriteLine(ramfile, address, 2)
+    EndIf
+    instpointer = instpointer + 4
+    
+  ElseIf oper = "COMP M I" Then
+    a1 = prg[instpointer + 1]
+    num1 = File.ReadLine(ramfile, a1)
+    num2 = prg[instpointer + 2]
+    a2 = prg[instpointer + 3]
+    If num1 < num2 Then
+      File.WriteLine(ramfile, a2, 0)
+    ElseIf num1 = num2 Then
+      File.WriteLine(ramfile, a2, 1)
+    Else
+      File.WriteLine(ramfile, a2, 2)
+    EndIf
+    instpointer = instpointer + 4
+    
+  ElseIf oper = "COMP I M" Then
+    a1 = prg[instpointer + 1]
+    num2 = File.ReadLine(ramfile, a1)
+    num1 = prg[instpointer + 2]
+    a2 = prg[instpointer + 3]
+    If num1 < num2 Then
+      File.WriteLine(ramfile, a2, 0)
+    ElseIf num1 = num2 Then
+      File.WriteLine(ramfile, a2, 1)
+    Else
+      File.WriteLine(ramfile, a2, 2)
+    EndIf
+    instpointer = instpointer + 4
+    
+  ElseIf oper = "JE" Then
+    a1 = prg[instpointer + 1]
+    a2 = prg[instpointer + 2]
+    value = File.ReadLine(ramfile, a1)
+    If value = 1 Then
+      instpointer = a2
+    Else
+      instpointer = instpointer + 3
+    EndIf
+    
+  ElseIf oper = "JNE" Then
+    a1 = prg[instpointer + 1]
+    a2 = prg[instpointer + 2]
+    value = File.ReadLine(ramfile, a1)
+    If value <> 1 Then
+      instpointer = a2
+    Else
+      instpointer = instpointer + 3
+    EndIf
+    
+  ElseIf oper = "JB" Then
+    a1 = prg[instpointer + 1]
+    a2 = prg[instpointer + 2]
+    value = File.ReadLine(ramfile, a1)
+    If value = 2 Then
+      instpointer = a2
+    Else
+      instpointer = instpointer + 3
+    EndIf
+    
+  ElseIf oper = "JNB" Then
+    a1 = prg[instpointer + 1]
+    a2 = prg[instpointer + 2]
+    value = File.ReadLine(ramfile, a1)
+    If value <> 2 Then
+      instpointer = a2
+    Else
+      instpointer = instpointer + 3
+    EndIf
+    
+  ElseIf oper = "JS" Then
+    a1 = prg[instpointer + 1]
+    a2 = prg[instpointer + 2]
+    value = File.ReadLine(ramfile, a1)
+    If value = 0 Then
+      instpointer = a2
+    Else
+      instpointer = instpointer + 3
+    EndIf
+    
+  ElseIf oper = "JNS" Then
+    a1 = prg[instpointer + 1]
+    a2 = prg[instpointer + 2]
+    value = File.ReadLine(ramfile, a1)
+    If value <> 0 Then
+      instpointer = a2
+    Else
+      instpointer = instpointer + 3
+    EndIf
+    
+  ElseIf oper = "INC" Then
+    address = prg[instpointer + 1]
+    value = File.ReadLine(ramfile, address)
+    value = value + 1
+    File.WriteLine(ramfile, address, value)
+    instpointer = instpointer + 2
+    
+  ElseIf oper = "DEC" Then
+    address = prg[instpointer + 1]
+    value = File.ReadLine(ramfile, address)
+    value = value - 1
+    File.WriteLine(ramfile, address, value)
+    instpointer = instpointer + 2
+    
+  ElseIf oper = "PRNT I" Then
+    value = prg[instpointer + 1]
+    TextWindow.Write(value)
+    instpointer = instpointer + 2
+    
+  ElseIf oper = "PRNT M" Then
+    address = prg[instpointer + 1]
+    value = File.ReadLine(ramfile, address)
+    TextWindow.Write(value)
+    instpointer = instpointer + 2
+    
+  ElseIf oper = "PRNT S" Then
+    value = File.ReadLine(stackfile, stckpointer)
+    TextWindow.Write(value)
+    instpointer = instpointer + 1
+    
+  ElseIf oper = "PRNTL I" Then
+    value = prg[instpointer + 1]
+    TextWindow.WriteLine(value)
+    instpointer = instpointer + 2
+    
+  ElseIf oper = "PRNTL M" Then
+    address = prg[instpointer + 1]
+    value = File.ReadLine(ramfile, address)
+    TextWindow.WriteLine(value)
+    instpointer = instpointer + 2
+    
+  ElseIf oper = "PRNTL S" Then
+    value = File.ReadLine(stackfile, stckpointer)
+    TextWindow.WriteLine(value)
+    instpointer = instpointer + 1
+    
+  ElseIf oper = "RNG" Then
+    value = prg[instpointer + 1]
+    address = prg[instpointer + 2]
+    File.WriteLine(ramfile, address, Math.GetRandomNumber(value))
+    instpointer = instpointer + 3
+    
+  ElseIf oper = "HALT" Then
+    halt = 1
+  Else
+    TextWindow.WriteLine("Invalid instruction")
+    halt = 1
+    TextWindow.WriteLine("Do you want to open another program?")
+    value = TextWindow.Read()
+    If value = "y" Then
+      Goto open
+    EndIf
+  EndIf
+  
+EndWhile
+
+TextWindow.WriteLine("The program has halted")
+TextWindow.WriteLine("Do you want to open another program?")
+value = TextWindow.Read()
+If value = "y" Then
+  Goto open
+EndIf
+  
