@@ -4,7 +4,7 @@ A GitHub repository for my Small Basic CPU emulator code and other things.
 This CPU emulator does not emulate any excisting CPUs.
 It currently has the following instructions:
 
-.
+
 NOP - no operation
 
 ITM - immediate to memory
