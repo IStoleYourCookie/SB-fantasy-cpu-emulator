@@ -1,4 +1,4 @@
-//open:
+open:
 i = 1
 name = TextWindow.Read()
 romfile = "C:\TEST\" + name
