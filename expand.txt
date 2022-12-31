@@ -1,0 +1,13 @@
+  
+  For i = 1 To Array.GetItemCount(prg)
+    If i = instpointer Then
+      TextWindow.WriteLine(i + " X " + prg[i])
+    Else
+      TextWindow.WriteLine(i + " . " + prg[i])
+    EndIf
+  EndFor
+  TextWindow.WriteLine("")
+  TextWindow.WriteLine("")
+  TextWindow.WriteLine(instpointer + " : " + prg[instpointer])
+  TextWindow.WriteLine(stckpointer + " : " + File.ReadLine(stackfile, stckpointer))
+  TextWindow.WriteLine("")
