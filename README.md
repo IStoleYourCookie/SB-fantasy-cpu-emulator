@@ -76,6 +76,7 @@ RNG - generate random number(integer) with a maximum value of a1, store at memor
 HALT - halts the program
 _________________________
 The user update(v0.5): new instructions:
+__________________________
 
 EXE I - opens a new program, ram and stack file where the program rom's name is immidiate value 1, the ram's is IV2, the stack's is IV3
 
