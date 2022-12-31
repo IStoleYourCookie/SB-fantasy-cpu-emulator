@@ -6,7 +6,8 @@ name = TextWindow.Read()
 ramfile = "C:\TEST\" + name
 name = TextWindow.Read()
 stackfile = "C:\TEST\" + name
-
+inside:
+i = 1
 While File.ReadLine(romfile, i) <> "^Z"
   prg[i] = File.ReadLine(romfile, i)
   i = i + 1
@@ -245,6 +246,87 @@ While halt = 0
     address = prg[instpointer + 2]
     File.WriteLine(ramfile, address, Math.GetRandomNumber(value))
     instpointer = instpointer + 3
+    
+  ElseIf oper = "ADD" Then
+    a1 = prg[instpointer + 1]
+    a2 = prg[instpointer + 2]
+    a3 = prg[instpointer + 3]
+    num1 = File.ReadLine(ramfile, a1)
+    num2 = File.ReadLine(ramfile, a2)
+    value = num1 + num2
+    File.WriteLine(ramfile, a3, value)
+    instpointer = instpointer + 4
+    
+  ElseIf oper = "SUB" Then
+    a1 = prg[instpointer + 1]
+    a2 = prg[instpointer + 2]
+    a3 = prg[instpointer + 3]
+    num1 = File.ReadLine(ramfile, a1)
+    num2 = File.ReadLine(ramfile, a2)
+    value = num1 - num2
+    File.WriteLine(ramfile, a3, value)
+    instpointer = instpointer + 4
+    
+  ElseIf oper = "MUL" Then
+    a1 = prg[instpointer + 1]
+    a2 = prg[instpointer + 2]
+    a3 = prg[instpointer + 3]
+    num1 = File.ReadLine(ramfile, a1)
+    num2 = File.ReadLine(ramfile, a2)
+    value = num1 * num2
+    File.WriteLine(ramfile, a3, value)
+    instpointer = instpointer + 4
+    
+  ElseIf oper = "DIV" Then
+    a1 = prg[instpointer + 1]
+    a2 = prg[instpointer + 2]
+    a3 = prg[instpointer + 3]
+    num1 = File.ReadLine(ramfile, a1)
+    num2 = File.ReadLine(ramfile, a2)
+    value = num1 / num2
+    File.WriteLine(ramfile, a3, value)
+    instpointer = instpointer + 4
+    
+  ElseIf oper = "EXE I" Then
+    romfile = "C:\TEST\" + prg[instpointer + 1]
+    ramfile = "C:\TEST\" + prg[instpointer + 2]
+    stackfile = "C:\TEST\" + prg[instpointer + 3]
+    Goto inside
+    
+  ElseIf oper = "EXE M" Then
+    a1 = prg[instpointer + 1]
+    a2 = prg[instpointer + 2]
+    a3 = prg[instpointer + 3]
+    romfile = "C:\TEST\" + File.ReadLine(ramfile, a1)
+    ramfile = "C:\TEST\" + File.ReadLine(ramfile, a2)
+    stackfile = "C:\TEST\" + File.ReadLine(ramfile, a3)
+    Goto inside
+    
+  ElseIf oper = "CLR D" Then
+    TextWindow.Clear()
+    instpointer = instpointer + 1
+    
+  ElseIF oper = "INP S" Then
+    value = TextWindow.Read()
+    File.WriteLine(stackfile, stckpointer, value)
+    stckpointer = stckpointer + 1
+    
+  ElseIf oper = "INP M" Then
+    value = TextWindow.Read()
+    address = prg[instpointer + 1]
+    File.WriteLine(ramfile, address, value)
+    instpointer = instpointer + 2
+    
+  ElseIF oper = "NINP S" Then
+    value = TextWindow.ReadNumber()
+    File.WriteLine(stackfile, stckpointer, value)
+    stckpointer = stckpointer + 1
+    
+  ElseIf oper = "NINP M" Then
+    value = TextWindow.ReadNumber()
+    address = prg[instpointer + 1]
+    File.WriteLine(ramfile, address, value)
+    instpointer = instpointer + 2
     
   ElseIf oper = "HALT" Then
     halt = 1
