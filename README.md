@@ -92,7 +92,7 @@ INP M - gets a srting input from user, saves the input at memory[address]
 
 NINP M - gets a number input from user, saves the input at memory[address]
 ________________________
-Inportant notes:
+Important notes:
 
 I do not even know if this is an emulator or a compiler or somthing else. At the time of making this repository, I'm only 14 years old, that's why this is written in Small Basic, which is not even recognised by GitHub as a programming languauge.
 
