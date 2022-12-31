@@ -4,7 +4,6 @@ A GitHub repository for my Small Basic CPU emulator code and other things.
 This CPU emulator does not emulate any excisting CPUs.
 It currently has the following instructions:
 
-
 NOP - no operation
 
 ITM - immediate to memory
@@ -75,3 +74,20 @@ PRNTL S - print value at stack[stackpointer] with new line
 RNG - generate random number(integer) with a maximum value of a1, store at memory[a1]
 
 HALT - halts the program
+-------------------------
+The user update(v0.5): new instructions:
+
+EXE I - opens a new program, ram and stack file where the program rom's name is immidiate value 1, the ram's is IV2, the stack's is IV3
+
+EXE M - opens a new program, ram and stack file, where the program rom's name is at memory[a1], the ram's at memory[a2], the stack's at memory[a3]
+
+CLR D - clears console
+
+INP S - gets a srting input from user, saves the input at stack[stackpointer]
+
+NINP S - gets a number input from user, saves the input at stack[stackpointer]
+
+INP M - gets a srting input from user, saves the input at memory[address]
+
+NINP M - gets a number input from user, saves the input at memory[address]
+
