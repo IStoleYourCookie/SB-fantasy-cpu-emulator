@@ -1,6 +1,6 @@
 # SB-fantasy-cpu-emulator
 A GitHub repository for my Small Basic CPU emulator code and other things.
-
+________________________________
 This CPU emulator does not emulate any excisting CPUs.
 It currently has the following instructions:
 
@@ -91,4 +91,9 @@ NINP S - gets a number input from user, saves the input at stack[stackpointer]
 INP M - gets a srting input from user, saves the input at memory[address]
 
 NINP M - gets a number input from user, saves the input at memory[address]
+________________________
+Inportant notes:
 
+I do not even know if this is an emulator or a compiler or somthing else. At the time of making this repository, I'm only 14 years old, that's why this is written in Small Basic, which is not even recognised by GitHub as a programming languauge.
+
+The  expension.txt file contains debug code. For usage, it needs to be put in the main while loop, after the "oper" variable decleration.
