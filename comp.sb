@@ -19,7 +19,13 @@ stckpointer = 1
 
 While halt = 0
   
-  oper = prg[instpointer]
+  str = prg[instpointer]
+  loc = Text.GetIndexOf(str, ";-")
+  If loc = 0 Then
+    oper = str
+  Else
+    oper = Text.GetSubText(str, 1, loc - 1)
+  EndIf
   
   If oper = "NOP" Then
     instpointer = instpointer + 1
