@@ -79,7 +79,7 @@ The comment update(v0.6): comments can now be added to your code
 __________________________
 Write a comment like this:
 
-            //INSTRUCTION;-comment
+            INSTRUCTION;-comment
             
 (You start a comment with ";-")
 ________________________
