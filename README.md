@@ -75,22 +75,13 @@ RNG - generate random number(integer) with a maximum value of a1, store at memor
 
 HALT - halts the program
 _________________________
-The user update(v0.5): new instructions:
+The comment update(v0.6): comments can now be added to your code
 __________________________
+Write a comment like this:
 
-EXE I - opens a new program, ram and stack file where the program rom's name is immidiate value 1, the ram's is IV2, the stack's is IV3
-
-EXE M - opens a new program, ram and stack file, where the program rom's name is at memory[a1], the ram's at memory[a2], the stack's at memory[a3]
-
-CLR D - clears console
-
-INP S - gets a srting input from user, saves the input at stack[stackpointer]
-
-NINP S - gets a number input from user, saves the input at stack[stackpointer]
-
-INP M - gets a srting input from user, saves the input at memory[address]
-
-NINP M - gets a number input from user, saves the input at memory[address]
+            //INSTRUCTION;-comment
+            
+(You start a comment with ";-")
 ________________________
 Important notes:
 
